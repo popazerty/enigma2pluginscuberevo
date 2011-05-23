@@ -386,34 +386,41 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 		if current[1].help_window.instance is not None:
 			current[1].help_window.instance.hide()
 
-		l3cert = etpm.getCert(eTPM.TPMD_DT_LEVEL3_CERT)
-		if l3cert is None or l3cert is "":
-			self["videoactions"].setEnabled(False)
-			self["searchactions"].setEnabled(False)
-			self["config_actions"].setEnabled(False)
-			self["historyactions"].setEnabled(False)
-			self["statusactions"].setEnabled(True)
-			self.hideSuggestions()
-			self.statuslist = []
-			self.statuslist.append(( _("Genuine Dreambox validation failed!"), _("Verify your Dreambox authenticity by running the genuine dreambox plugin!" ) ))
-			self["feedlist"].style = "state"
-			self['feedlist'].setList(self.statuslist)
-			return
-
-		self.l3key = validate_cert(l3cert, self.l2key)
-		if self.l3key is None:
-			print "l3cert invalid"
-			return
-		rnd = get_rnd()
-		if rnd is None:
-			print "random error"
-			return
-
-		val = etpm.challenge(rnd)
-		result = decrypt_block(val, self.l3key)
+#--->
+#-		l3cert = etpm.getCert(eTPM.TPMD_DT_LEVEL3_CERT)
+#-		if l3cert is None or l3cert is "":
+#-			self["videoactions"].setEnabled(False)
+#-			self["searchactions"].setEnabled(False)
+#-			self["config_actions"].setEnabled(False)
+#-			self["historyactions"].setEnabled(False)
+#-			self["statusactions"].setEnabled(True)
+#-			self.hideSuggestions()
+#-			self.statuslist = []
+#-			self.statuslist.append(( _("Genuine Dreambox validation failed!"), _("Verify your Dreambox authenticity by running the genuine dreambox plugin!" ) ))
+#-			self["feedlist"].style = "state"
+#-			self['feedlist'].setList(self.statuslist)
+#-			return
+#-
+#-		self.l3key = validate_cert(l3cert, self.l2key)
+#-		if self.l3key is None:
+#-			print "l3cert invalid"
+#-			return
+#-		rnd = get_rnd()
+#-		if rnd is None:
+#-			print "random error"
+#-			return
+#-
+#-		val = etpm.challenge(rnd)
+#-		result = decrypt_block(val, self.l3key)
+#---<
 
 		self.statuslist = []
-		if result[80:88] == rnd:
+#--->
+#-		if result[80:88] == rnd:
+#---<
+#+++>
+		if True:
+#+++<
 			self.statuslist.append(( _("Fetching feed entries"), _("Trying to download the Youtube feed entries. Please wait..." ) ))
 			self["feedlist"].style = "state"
 			self['feedlist'].setList(self.statuslist)
@@ -453,13 +460,18 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
 			self.statuslist = []
 			self.hideSuggestions()
 			result = None
-			if self.l3key is not None:
-				rnd = get_rnd()
-				if rnd is None:
-					return
-				val = etpm.challenge(rnd)
-				result = decrypt_block(val, self.l3key)
-			if not result or result[80:88] != rnd:
+#--->
+#-			if self.l3key is not None:
+#-				rnd = get_rnd()
+#-				if rnd is None:
+#-					return
+#-				val = etpm.challenge(rnd)
+#-				result = decrypt_block(val, self.l3key)
+#-			if not result or result[80:88] != rnd:
+#---<
+#+++>
+			if True:
+#+++<
 				self["key_green"].show()
 				self.statuslist.append(( _("Genuine Dreambox validation failed!"), _("Verify your Dreambox authenticity by running the genuine dreambox plugin!" ) ))
 				self["feedlist"].style = "state"
@@ -1775,16 +1787,18 @@ class MyTubePlayer(Screen, InfoBarNotifications):
 
 
 def MyTubeMain(session, **kwargs):
-	l2 = False
-	l2cert = etpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
-	if l2cert is None:
-		print "l2cert not found"
-		return
-	
-	l2key = validate_cert(l2cert, rootkey)
-	if l2key is None:
-		print "l2cert invalid"
-		return
+#--->
+#-	l2 = False
+#-	l2cert = etpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
+#-	if l2cert is None:
+#-		print "l2cert not found"
+#-		return
+#-	
+#-	l2key = validate_cert(l2cert, rootkey)
+#-	if l2key is None:
+#-		print "l2cert invalid"
+#-		return
+#---<
 	l2 = True
 	if l2:
 		session.open(MyTubePlayerMainScreen,l2key)

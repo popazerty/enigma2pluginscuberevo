@@ -227,6 +227,7 @@ static const unsigned char tpm_root_mod[128] = {
 
 static bool signature()
 {
+#ifndef __sh__
 	int chk = 1;
 	FILE *fp; 
 	fp = fopen ("/proc/stb/info/model", "r");
@@ -272,6 +273,9 @@ static bool signature()
 	}
 	else
 		return true;
+#else
+	return true;
+#endif
 }
 
 // eBitrateCalculator replacement
