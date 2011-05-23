@@ -448,22 +448,18 @@ def networkstart(reason, session):
 #-	else:
 #-		l2r = True
 #-		
-#-	if l2r:	
-#-		if reason is True:
-#-			startWebserver(session, l2k)
-#-			checkBonjour()
-#-			
-#-		elif reason is False:
-#-			stopWebserver(session)
-#-			checkBonjour()
+#-	if l2r:
 #---<
-	if reason is True:
-		startWebserver(session, l2k)
-		checkBonjour()
-		
-	elif reason is False:
-		stopWebserver(session)
-		checkBonjour()
+#+++>
+	if True:
+#+++<	
+		if reason is True:
+			startWebserver(session, l2k)
+			checkBonjour()
+			
+		elif reason is False:
+			stopWebserver(session)
+			checkBonjour()
 		
 def openconfig(session, **kwargs):
 	session.openWithCallback(configCB, WebIfConfigScreen)
@@ -486,20 +482,17 @@ def configCB(result, session):
 #-	else:
 #-		l2r = True
 #-		
-#-	if l2r:	
-#-		if result:
-#-			print "[WebIf] config changed"
-#-			restartWebserver(session, l2k)
-#-			checkBonjour()
-#-		else:
-#-			print "[WebIf] config not changed"
+#-	if l2r:
 #---<
-	if result:
-		print "[WebIf] config changed"
-		restartWebserver(session, l2k)
-		checkBonjour()
-	else:
-		print "[WebIf] config not changed"
+#+++>
+	if True:
+#+++<	
+		if result:
+			print "[WebIf] config changed"
+			restartWebserver(session, l2k)
+			checkBonjour()
+		else:
+			print "[WebIf] config not changed"
 
 def Plugins(**kwargs):
 	p = PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=sessionstart)
